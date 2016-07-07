@@ -17,8 +17,8 @@ public class HelloWorldTest {
     public void testReturnHelloKey(){
         HelloWorld helloWorld = new HelloWorld();
         System.out.println("From Test: " + helloWorld.returnHelloWorldKey());
-        Assert.assertEquals(helloWorld.returnHelloWorldKey(), "Hello Key");
-        //assert helloWorld.returnHelloWorldKey().equals("Hello Key");
+        //Assert.assertEquals(helloWorld.returnHelloWorldKey(), "Hello Key");
+        assert helloWorld.returnHelloWorldKey().equals("Hello Key");
     }
 
 
