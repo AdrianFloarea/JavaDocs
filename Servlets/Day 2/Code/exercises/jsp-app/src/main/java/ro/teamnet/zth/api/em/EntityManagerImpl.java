@@ -26,7 +26,7 @@ public class EntityManagerImpl implements EntityManager {
             //get columns
             List<ColumnInfo> columns = EntityUtils.getColumns(entity.getClass());
 
-            Integer lastId;
+            Integer lastId=0;
             //set values for columns
             for(ColumnInfo column : columns) {
                 if(column.isId()) {
@@ -175,6 +175,7 @@ public class EntityManagerImpl implements EntityManager {
 
             T instance = entityClass.newInstance();
             while (rs.next()) {
+                instance = entityClass.newInstance();
                 for (ColumnInfo column : columns) {
                     column.setValue(rs.getObject(column.getDbName()));
                     Field field = instance.getClass().getDeclaredField(column.getColumnName());
