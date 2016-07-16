@@ -1,5 +1,7 @@
 package ro.teamnet.zth.web;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.ObjectWriter;
 import ro.teamnet.zth.api.annotations.MyController;
 import ro.teamnet.zth.api.annotations.MyRequestMethod;
 import ro.teamnet.zth.appl.controller.DepartmentController;
@@ -83,7 +85,8 @@ public class DispatcherServlet extends HttpServlet {
     }
 
     private void reply(Object result, HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.getWriter().write(result.toString());
+        ObjectMapper objectMapper=new ObjectMapper();
+        objectMapper.writeValue(resp.getOutputStream(),result);
     }
 
     private Object dispatch(HttpServletRequest req, HttpServletResponse resp) {
@@ -97,7 +100,7 @@ public class DispatcherServlet extends HttpServlet {
             Class controllerClass=Class.forName(ms.getControllerClass());
             Object controllerInstance=controllerClass.newInstance();
             Method theMethod=controllerClass.getMethod(ms.getMethodName());
-            return theMethod.invoke(controllerInstance).toString();
+            return theMethod.invoke(controllerInstance);
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -111,15 +114,6 @@ public class DispatcherServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        /*if(pathinfo.startsWith("/employees")){
-            EmployeeController employeeController=new EmployeeController();
-            String result=employeeController.getAllEmployees();
-            return  result;
-        }
-        if(pathinfo.startsWith("/departments")){
-            DepartmentController departmentController=new DepartmentController();
-            return departmentController.getAllDepartments();
-        }*/
         return "Hello";
     }
 }
